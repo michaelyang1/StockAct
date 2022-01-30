@@ -1,3 +1,4 @@
+from crypt import methods
 import plaid
 from plaid.api import plaid_api
 from flask import Flask, jsonify
@@ -37,17 +38,17 @@ def get_account():
     r = requests.get(ACCOUNT_URL, headers=HEADERS)
     return json.loads(r.content)
 
-@app.route('/checkuser/<string:user>/<string:pwd>')
-def check_user(user,pwd):
+@app.route('/checkuser/<string:user>/<string:pwd>', methods=['GET'])
+def check_user(user, pwd):
     resp = users.find_one({"username": user})
     if resp['password'] == pwd:
         return json.loads(resp)
-    else:
-        return None
+    return None
 
-@app.route('/createuser/<string:user>/<string:pwd>')
-def create_user(user,pwd):
+@app.route('/createuser/<string:user>/<string:pwd>', methods=['GET'])
+def create_user(user, pwd):
     users.insert_one({"username": user, "password": pwd})
+    return json.loads('user added')
 
 
 
@@ -119,4 +120,5 @@ if __name__ == '__main__':
     # with app.app_context():
     #     get_politician_names()
     #     get_politician_trades('Nancy Pelosi')
-    print(create_order('AAPL', 100, 'buy', 'market', 'gtc'))
+    # print(create_order('AAPL', 100, 'buy', 'market', 'gtc'))
+    create_user("testuser","testpass")
