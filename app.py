@@ -1,8 +1,55 @@
+import plaid
+from plaid.api import plaid_api
 from flask import Flask, jsonify
 import requests
 import json
 
 app = Flask(__name__)
+
+# configuration = plaid.Configuration(
+#     host=plaid.Environment.Sandbox,
+#     api_key={
+#         'clientId': '61f60b0a6862640013522b7d',
+#         'secret': 'db81faacca77ffe422a201b1777dd2',
+#     }
+# )
+#
+# api_client = plaid.ApiClient(configuration)
+# client = plaid_api.PlaidApi(api_client)
+
+# ALPACA
+BASE_URL = 'https://paper-api.alpaca.markets'
+ACCOUNT_URL = '{}/v2/account'.format(BASE_URL)
+ORDERS_URL = '{}/v2/orders'.format(BASE_URL)
+HEADERS = {'APCA-API-KEY-ID': 'PKRRRDL0OBGCBIEBBERD',
+           'APCA-API-SECRET-KEY': 'NwLG8uuMDBETc8fJrfLY0WvyefM94kuLUWbu9Rcq'}
+
+
+def get_account():
+    r = requests.get(ACCOUNT_URL, headers=HEADERS)
+    return json.loads(r.content)
+
+
+@app.route('/createorder/<string:symbol,int:qty,string:side,string:type,string:time_in_force>', methods=['GET'])
+def create_order(symbol, qty, side, type, time_in_force):
+    data = {
+        'symbol': symbol,
+        'qty': qty,
+        'side': side,
+        'type': type,
+        'time_in_force': time_in_force
+    }
+
+    r = requests.post(ORDERS_URL, json=data, headers=HEADERS)
+
+    return json.loads(r.content)
+
+
+@app.route('/getorders', methods=['GET'])
+def get_orders():
+    r = requests.get(ORDERS_URL, headers=HEADERS)
+
+    return json.loads(r.content)
 
 
 def hit_endpoint():
@@ -13,14 +60,13 @@ def hit_endpoint():
     r = requests.get(url, headers=headers)
     data = json.loads(r.content)
 
-    # for d in data[:100]:
-        # print(d)
     return data
 
 
 @app.route('/')
 def index():
     return 'Welcome to the StockAct API'
+
 
 @app.route('/listpoliticians', methods=['GET'])
 def get_politician_names():
@@ -32,6 +78,7 @@ def get_politician_names():
             names.append(name)
     # print(names)
     return jsonify(names)
+
 
 @app.route('/politicians/<string:name>', methods=['GET'])
 def get_politician_trades(name):
@@ -48,7 +95,7 @@ def get_politician_trades(name):
 
 if __name__ == '__main__':
     # app.run(threaded=True, port=5000)
-    with app.app_context():
-          get_politician_names()
+    # with app.app_context():
+    #     get_politician_names()
     #     get_politician_trades('Nancy Pelosi')
-
+    print(create_order('AAPL', 100, 'buy', 'market', 'gtc'))
