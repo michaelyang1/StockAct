@@ -1,10 +1,9 @@
 from crypt import methods
 from tabnanny import check
-import plaid
-from plaid.api import plaid_api
 from flask import Flask, jsonify
 import requests
 import json
+import datetime
 from pymongo import MongoClient
 
 client = MongoClient('mongodb+srv://admin:admin@cluster0.orjsd.mongodb.net/Stock-Act?retryWrites=true&w=majority')
@@ -14,17 +13,6 @@ users = db["users"]
 
 
 app = Flask(__name__)
-
-# configuration = plaid.Configuration(
-#     host=plaid.Environment.Sandbox,
-#     api_key={
-#         'clientId': '61f60b0a6862640013522b7d',
-#         'secret': 'db81faacca77ffe422a201b1777dd2',
-#     }
-# )
-#
-# api_client = plaid.ApiClient(configuration)
-# client = plaid_api.PlaidApi(api_client)
 
 # ALPACA
 BASE_URL = 'https://paper-api.alpaca.markets'
@@ -57,7 +45,6 @@ def create_user(user, pwd):
     return None
 
 
-@app.route('/createorder/<string:symbol>/<int:qty>/<string:side>/<string:type>/<string:time_in_force>', methods=['GET'])
 def create_order(symbol, qty, side, type, time_in_force):
     data = {
         'symbol': symbol,
@@ -112,7 +99,6 @@ def get_politician_names():
     return jsonify(names)
 
 
-@app.route('/politicians/<string:name>', methods=['GET'])
 def get_politician_trades(name):
     data = hit_endpoint()
     trades = []
@@ -122,7 +108,7 @@ def get_politician_trades(name):
             trades.append(trade)
 
     # print(trades)
-    return jsonify(trades)
+    return trades
 
 
 if __name__ == '__main__':
@@ -138,4 +124,31 @@ if __name__ == '__main__':
         # except ValueError:
         #     pass
         # print(check_user("user123","pass123"))
-        print(set_track("user123","nancy"))
+        # print(set_track("user123","nancy"))
+        pass
+
+    all_users = users.find({})
+    for user_info in all_users: 
+        # check if user is tracking anyone 
+        if 'track' in user_info:
+            # whoever they are tracking, get all their trades
+            politicians = user_info['track']
+            curr_date = datetime.date.today()
+            print(curr_date)
+
+            politicians = ['Nancy Pelosi']  # remove this line; testing purposes
+            for politician in politicians: 
+                trades = get_politician_trades(politician)
+
+                for trade in trades: 
+                    if trade['Date'] == curr_date: # we trade 
+                        print('traded!')
+                        side = 'buy'
+                        if trade['Transaction'] == 'Sale': 
+                            side = 'sell'
+                        create_order(trade['Ticker'], 100, side, 'market', 'gtc')
+                    else:
+                        print('not')
+                        break
+            
+
