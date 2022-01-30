@@ -13,8 +13,8 @@ def hit_endpoint():
     r = requests.get(url, headers=headers)
     data = json.loads(r.content)
 
-    for d in data[:100]:
-        print(d)
+    # for d in data[:100]:
+        # print(d)
     return data
 
 
@@ -22,6 +22,16 @@ def hit_endpoint():
 def index():
     return 'Welcome to the StockAct API'
 
+@app.route('/listpoliticians', methods=['GET'])
+def get_politician_names():
+    data = hit_endpoint()
+    names = []
+    for trade in data:
+        name = trade['Representative'].strip()
+        if not name in names:
+            names.append(name)
+    # print(names)
+    return jsonify(names)
 
 @app.route('/politicians/<string:name>', methods=['GET'])
 def get_politician_trades(name):
@@ -32,11 +42,12 @@ def get_politician_trades(name):
         if trade['Representative'].strip() == name:
             trades.append(trade)
 
-    print(trades)
+    # print(trades)
     return jsonify(trades)
 
 
 if __name__ == '__main__':
-    app.run(threaded=True, port=5000)
-    # with app.app_context():
+    # app.run(threaded=True, port=5000)
+    with app.app_context():
+          get_politician_names()
     #     get_politician_trades('Nancy Pelosi')
