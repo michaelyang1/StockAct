@@ -3,6 +3,13 @@ from plaid.api import plaid_api
 from flask import Flask, jsonify
 import requests
 import json
+from pymongo import MongoClient
+
+client = MongoClient('mongodb+srv://admin:admin@cluster0.orjsd.mongodb.net/Stock-Act?retryWrites=true&w=majority')
+db = client["Stock-Act"]
+users = db["users"]
+
+
 
 app = Flask(__name__)
 
@@ -28,6 +35,19 @@ HEADERS = {'APCA-API-KEY-ID': 'PKRRRDL0OBGCBIEBBERD',
 def get_account():
     r = requests.get(ACCOUNT_URL, headers=HEADERS)
     return json.loads(r.content)
+
+@app.route('/checkuser/<string:user>/<string:pwd>')
+def check_user(user,pwd):
+    resp = users.find_one({"username": user})
+    if resp['password'] == pwd:
+        return json.loads(resp)
+    else:
+        return None
+
+@app.route('/createuser/<string:user>/<string:pwd>')
+def create_user(user,pwd):
+    users.insert_one({"username": user, "password": pwd})
+
 
 
 @app.route('/createorder/<string:symbol>/<int:qty>/<string:side>/<string:type>/<string:time_in_force>', methods=['GET'])
