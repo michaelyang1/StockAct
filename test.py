@@ -37,5 +37,6 @@ def get_politician_trades(name):
 
 
 if __name__ == '__main__':
-    with app.app_context():
-        get_politician_trades('Nancy Pelosi')
+    app.run(threaded=True, port=5000)
+    # with app.app_context():
+    #     get_politician_trades('Nancy Pelosi')
