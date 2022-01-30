@@ -40,19 +40,21 @@ def get_account():
     return json.loads(r.content)
 
 @app.route('/checkuser/<string:user>/<string:pwd>', methods=['GET'])
-def check_user(user, pwd):
+def check_user(user, pwd=""):
+    print("checking user")
     resp = users.find_one({"username": user})
-    if resp['password'] == pwd:
-        return json.loads(resp)
+    if resp and resp['password'] == pwd:
+        return jsonify({'id': str(resp['_id']), 'username': resp['username']})
     return None
 
 @app.route('/createuser/<string:user>/<string:pwd>', methods=['GET'])
 def create_user(user, pwd):
-    name = check_user(user)
+    name = users.find_one({'username': user})
+    print(name)
     if not name:
-        users.insert_one({"username": user, "password": pwd})
+        users.insert_one({"username": user, "password": pwd, "track": 'untracked'})
         return json.loads('user added')
-    return json.loads('username taken')
+    return None
 
 
 @app.route('/createorder/<string:symbol>/<int:qty>/<string:side>/<string:type>/<string:time_in_force>', methods=['GET'])
@@ -68,6 +70,11 @@ def create_order(symbol, qty, side, type, time_in_force):
     r = requests.post(ORDERS_URL, json=data, headers=HEADERS)
 
     return json.loads(r.content)
+
+
+@app.route('/settrack/<string:user>/<string:politician>', methods=['GET'])
+def set_track(user,politician):
+    users.find_one_and_update({'user': user},{'track': politician})
 
 
 @app.route('/getorders', methods=['GET'])
@@ -120,8 +127,15 @@ def get_politician_trades(name):
 
 if __name__ == '__main__':
     # app.run(threaded=True, port=5000)
-    # with app.app_context():
+    with app.app_context():
     #     get_politician_names()
     #     get_politician_trades('Nancy Pelosi')
     # print(create_order('AAPL', 100, 'buy', 'market', 'gtc'))
-    create_user("testuser","testpass")
+    # create_user("testuser","testpass")
+        # print(check_user('testuser','testpass'))
+        try:
+            print(create_user("user123","pass123"))
+        except ValueError:
+            pass
+        # print(check_user("user123","pass123"))
+        # print(set_track("user123","nancy"))
