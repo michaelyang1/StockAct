@@ -62,6 +62,7 @@ def create_order(symbol, qty, side, type, time_in_force):
 @app.route('/settrack/<string:user>/<string:politician>', methods=['GET'])
 def set_track(user,politician):
     users.find_one_and_update({'username': user},{'$set':{'track': politician}})
+    return jsonify({'status': 'good'})
 
 
 @app.route('/getorders', methods=['GET'])
