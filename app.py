@@ -36,12 +36,12 @@ def check_user(user, pwd=""):
     return None
 
 @app.route('/createuser/<string:user>/<string:pwd>/<string:name>', methods=['GET'])
-def create_user(user, pwd, usersname):
-    name = users.find_one({'username': user})
-    print(name)
-    if not name:
-        users.insert_one({"username": user, "password": pwd, "track": 'untracked', 'name': usersname})
-        return jsonify({'username': user, 'track': 'untracked', 'name': usersname})
+def create_user(user, pwd, name):
+    invalid = users.find_one({'username': user})
+    print(invalid)
+    if not invalid:
+        users.insert_one({"username": user, "password": pwd, "track": 'untracked', 'name': name})
+        return jsonify({'username': user, 'track': 'untracked', 'name': name})
     return None
 
 
@@ -113,7 +113,7 @@ def get_politician_trades(name):
 
 
 if __name__ == '__main__':
-    # app.run(threaded=True, port=5000)
+    app.run(threaded=True, port=5000)
     with app.app_context():
     #     get_politician_names()
     #     get_politician_trades('Nancy Pelosi')
@@ -126,7 +126,7 @@ if __name__ == '__main__':
         #     pass
         # print(check_user("user123","pass123"))
         # print(set_track("user123","nancy"))
-        print(create_user("user7","pass7","name7"))
+        print(create_user("newuser1","newpass1","newname1"))
         pass
 
     # all_users = users.find({})
