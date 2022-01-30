@@ -36,12 +36,12 @@ def check_user(user, pwd=""):
     return None
 
 @app.route('/createuser/<string:user>/<string:pwd>/<string:name>', methods=['GET'])
-def create_user(user, pwd, name):
+def create_user(user, pwd, usersname):
     name = users.find_one({'username': user})
     print(name)
     if not name:
-        users.insert_one({"username": user, "password": pwd, "track": 'untracked', 'name': name})
-        return json.loads('user added')
+        users.insert_one({"username": user, "password": pwd, "track": 'untracked', 'name': usersname})
+        return jsonify({'username': user, 'track': 'untracked', 'name': usersname})
     return None
 
 
@@ -125,30 +125,31 @@ if __name__ == '__main__':
         #     pass
         # print(check_user("user123","pass123"))
         # print(set_track("user123","nancy"))
+        print(create_user("user7","pass7","name7"))
         pass
 
-    all_users = users.find({})
-    for user_info in all_users: 
-        # check if user is tracking anyone 
-        if 'track' in user_info:
-            # whoever they are tracking, get all their trades
-            politicians = user_info['track']
-            curr_date = datetime.date.today()
-            print(curr_date)
+    # all_users = users.find({})
+    # for user_info in all_users: 
+    #     # check if user is tracking anyone 
+    #     if 'track' in user_info:
+    #         # whoever they are tracking, get all their trades
+    #         politicians = user_info['track']
+    #         curr_date = datetime.date.today()
+    #         print(curr_date)
 
-            politicians = ['Nancy Pelosi']  # remove this line; testing purposes
-            for politician in politicians: 
-                trades = get_politician_trades(politician)
+    #         politicians = ['Nancy Pelosi']  # remove this line; testing purposes
+    #         for politician in politicians: 
+    #             trades = get_politician_trades(politician)
 
-                for trade in trades: 
-                    if trade['Date'] == curr_date: # we trade 
-                        print('traded!')
-                        side = 'buy'
-                        if trade['Transaction'] == 'Sale': 
-                            side = 'sell'
-                        create_order(trade['Ticker'], 100, side, 'market', 'gtc')
-                    else:
-                        print('not')
-                        break
+    #             for trade in trades: 
+    #                 if trade['Date'] == curr_date: # we trade 
+    #                     print('traded!')
+    #                     side = 'buy'
+    #                     if trade['Transaction'] == 'Sale': 
+    #                         side = 'sell'
+    #                     create_order(trade['Ticker'], 100, side, 'market', 'gtc')
+    #                 else:
+    #                     print('not')
+    #                     break
             
 
