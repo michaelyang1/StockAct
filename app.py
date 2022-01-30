@@ -74,7 +74,7 @@ def create_order(symbol, qty, side, type, time_in_force):
 
 @app.route('/settrack/<string:user>/<string:politician>', methods=['GET'])
 def set_track(user,politician):
-    users.find_one_and_update({'user': user},{'track': politician})
+    users.find_one_and_update({'username': user},{'$set':{'track': politician}})
 
 
 @app.route('/getorders', methods=['GET'])
@@ -133,9 +133,9 @@ if __name__ == '__main__':
     # print(create_order('AAPL', 100, 'buy', 'market', 'gtc'))
     # create_user("testuser","testpass")
         # print(check_user('testuser','testpass'))
-        try:
-            print(create_user("user123","pass123"))
-        except ValueError:
-            pass
+        # try:
+        #     print(create_user("user123","pass123"))
+        # except ValueError:
+        #     pass
         # print(check_user("user123","pass123"))
-        # print(set_track("user123","nancy"))
+        print(set_track("user123","nancy"))
