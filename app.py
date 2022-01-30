@@ -32,15 +32,15 @@ def check_user(user, pwd=""):
     print("checking user")
     resp = users.find_one({"username": user})
     if resp and resp['password'] == pwd:
-        return jsonify({'id': str(resp['_id']), 'username': resp['username']})
+        return jsonify({'id': str(resp['_id']), 'username': resp['username'], 'track': resp['track'], 'name': resp['name']})
     return None
 
-@app.route('/createuser/<string:user>/<string:pwd>', methods=['GET'])
-def create_user(user, pwd):
+@app.route('/createuser/<string:user>/<string:pwd>/<string:name>', methods=['GET'])
+def create_user(user, pwd, name):
     name = users.find_one({'username': user})
     print(name)
     if not name:
-        users.insert_one({"username": user, "password": pwd, "track": 'untracked'})
+        users.insert_one({"username": user, "password": pwd, "track": 'untracked', 'name': name})
         return json.loads('user added')
     return None
 
