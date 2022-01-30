@@ -1,6 +1,5 @@
 from flask import Flask, jsonify
 import requests
-import pandas as pd
 import json
 
 app = Flask(__name__)
@@ -24,5 +23,19 @@ def index():
     return 'Welcome to the StockAct API'
 
 
+@app.route('/politicians/<string:name>', methods=['GET'])
+def get_politician_trades(name):
+    data = hit_endpoint()
+    trades = []
+
+    for trade in data:
+        if trade['Representative'].strip() == name:
+            trades.append(trade)
+
+    print(trades)
+    return jsonify(trades)
+
+
 if __name__ == '__main__':
-    hit_endpoint()
+    with app.app_context():
+        get_politician_trades('Nancy Pelosi')
