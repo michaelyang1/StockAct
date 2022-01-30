@@ -25,6 +25,7 @@ HEADERS = {'APCA-API-KEY-ID': 'PKRRRDL0OBGCBIEBBERD',
            'APCA-API-SECRET-KEY': 'NwLG8uuMDBETc8fJrfLY0WvyefM94kuLUWbu9Rcq'}
 
 
+@app.route('/getaccount', methods=['GET'])
 def get_account():
     r = requests.get(ACCOUNT_URL, headers=HEADERS)
     return json.loads(r.content)
