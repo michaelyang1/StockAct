@@ -1,4 +1,5 @@
 from crypt import methods
+from tabnanny import check
 import plaid
 from plaid.api import plaid_api
 from flask import Flask, jsonify
@@ -47,9 +48,11 @@ def check_user(user, pwd):
 
 @app.route('/createuser/<string:user>/<string:pwd>', methods=['GET'])
 def create_user(user, pwd):
-    users.insert_one({"username": user, "password": pwd})
-    return json.loads('user added')
-
+    name = check_user(user)
+    if not name:
+        users.insert_one({"username": user, "password": pwd})
+        return json.loads('user added')
+    return json.loads('username taken')
 
 
 @app.route('/createorder/<string:symbol>/<int:qty>/<string:side>/<string:type>/<string:time_in_force>', methods=['GET'])
