@@ -98,7 +98,7 @@ def get_politician_names():
     # print(names)
     return jsonify(names)
 
-
+@app.route('/politicians/<string:name>', methods=['GET'])
 def get_politician_trades(name):
     data = hit_endpoint()
     trades = []
@@ -108,7 +108,7 @@ def get_politician_trades(name):
             trades.append(trade)
 
     # print(trades)
-    return trades
+    return jsonify(trades)  
 
 
 if __name__ == '__main__':
