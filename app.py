@@ -51,3 +51,4 @@ if __name__ == '__main__':
     with app.app_context():
           get_politician_names()
     #     get_politician_trades('Nancy Pelosi')
+
