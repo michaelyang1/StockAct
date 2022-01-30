@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "stock-act",
+  "private_key_id": "18f12d02a4913ee368b31092f385bc952a1da767",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQChVjORJZhtMI9s\niY1AZmUoQ2yLfONwrY0Wczom3MQPBYGSTzPLzB5rJj7ld5lHk6zNA1hGvXOS5goY\ndacdyFV3Acw1D3fE7kSCFb9w+Uf/Z2TMtyIN3bUNGouixR5w//KOBB7Yg88e44OU\np9OGZTnmkvy6qcwgBvKw9aGVzvYCSODIt7tlkXnqFg1wtBXPIwHHbQbKbAFADbtW\nyYhXXeLbqikzjMtjq0ExBssjoC5ag6iBYyZZ/YaButj1P04Zdq7WiKvvejiYPoTG\nJ6j72+nj3FlvDx/zD6cLXcHq5vPXHQsaqMz0nYigz2NBJUHrSD8uDLh1TseKhHqS\nACKigFQtAgMBAAECggEACK9jR0UG15ntnqIpAHaCq5A1n6yxcbdmCPdbAgyQYV6i\ngwXQfAAZAxuj9yZhEgFZJBAyCFzag+XuVTLANFI8h5OJMrIKeId7GKWjEKnavl0K\niBqzsptky7fKHJEP+nVM0WhXYMB3venxg2clc+6vF0KCaGoLmw3EstIGSNJDXAwK\nYYP4Cmvs+i5NKYckjA0+lEr5OsyMDYPIbBdqE+CT2EUD2/U6hYp5aD0dNtJeI49/\n6kad//9r1E4asQWziR4LMxTQ5AWadsDGsnC1Z0DR4/EbeNqch+y6i7Q/uOoNiK6V\nTi/NM6GDBNHuY1iAKM7o0tkDzazp4YsGRpDMJJ68AQKBgQDYNXUU7iN+Oiqi3vd2\nge0aEBF1eQ1VXd4+Vr5HYxyRNs3E1LH3n7LcNbDRGyJMan3v6/z85ieQKXLYRrQd\nbqdFbWR/bTX8jGg4+GVaqpV9XOXROdAsldqB1tF+HS+nPD/3f9UXMQo4lO2fS367\ns9ZzG2bB3DlyeDH68WeYVSafDQKBgQC/B3rYgZc+AF77tNW5MTd0qnlaVQOdzUyp\ntSvk/xeLDUnOh/3EeLkySBGpo4PoeTEBmP0SVUGoSaDkTP3MU57qx8LxPLdIgEhC\nSEmS0bG7tcQSOXLOBzPOGVoX5DoGKodPDNCPyFASonPRgjY70VgjBSnVmsXWDece\nkZH1TSRBoQKBgBIP7TcRae+qplMy81N4KTmrK/o3YbDHBcEJeB34nrNW87vE1RVN\nxyB0b9AYRzZBE0JO4bSy+Y0mmUyOI4/t5ZV8PRAULJVrmW1g+v6nD5QIhb6D6OtA\nnZ+JNbkmcQu0kdd4W3Hzi9oMPwm2weCmdnzpRh1d64KvneVL846bVn2lAoGBALmV\nlbYC6CEXES/t9fiNpPeVqoGkt/e1fLYeyX8WiBPSHBMmsNYQBrOfqnEo5zyRiJep\nvqrx4vCQX1uMpMC9uFUVLwFYYCNyZUDno3qcd9QJ+WtPHoakHqMqpAkz818MMBoP\nNAuLqqb/5g7zNqcUcVDMcmEPlQWoyhE7kRZEFGYhAoGBAIoaXeRiryIJ3UjAlzsJ\ntcUJMmQ26Fmgqvs3jgZB1NA9YS8V8ruEAYxb9gbS31obSDAZwx5h5EuVeI2rIJNH\nbAsoT3ScESenTHh2jq5QrlAFQCmTRB9y1W1/xIeSdnyWui2D+HeMZFe2yKMQ2UnW\nWDOoo7Y9xwwlf0nk6LnaPLzP\n-----END PRIVATE KEY-----\n",
+  "client_email": "elitracy@stock-act.iam.gserviceaccount.com",
+  "client_id": "112310018504950274144",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/elitracy%40stock-act.iam.gserviceaccount.com"
+}
