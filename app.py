@@ -30,7 +30,7 @@ def get_account():
     return json.loads(r.content)
 
 
-@app.route('/createorder/<string:symbol,int:qty,string:side,string:type,string:time_in_force>', methods=['GET'])
+@app.route('/createorder/<string:symbol>/<int:qty>/<string:side>/<string:type>/<string:time_in_force>', methods=['GET'])
 def create_order(symbol, qty, side, type, time_in_force):
     data = {
         'symbol': symbol,
